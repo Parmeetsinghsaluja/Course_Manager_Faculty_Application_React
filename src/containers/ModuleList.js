@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 import ModuleListItem from '../components/ModuleListItem';
-import ModuleServiceClient from '../services/ModuleServiceClient'
+import ModuleServiceClient from '../services/ModuleServiceClient';
 
 
 export default class ModuleList extends Component {
@@ -74,7 +74,6 @@ export default class ModuleList extends Component {
         this.props.loadLessons(moduleId);
     }
     deleteModule(moduleId) {
-        console.log('delete ' + moduleId);
         this.moduleService
             .deleteModule(moduleId)
             .then(() => { this.findAllModulesForCourse(this.props.courseId); });

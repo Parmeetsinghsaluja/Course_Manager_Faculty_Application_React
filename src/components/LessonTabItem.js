@@ -5,7 +5,7 @@ export default class LessonTabItem
         return (
             <div>
                 <li className="nav-item">
-                    <a className="nav-link active" >
+                    <a className="nav-link active" onClick = {() => {this.props.showTopics(this.props.lesson.id)}}>
                         {this.props.lesson.title}
                      <i onClick =  {() => {this.props.deleteLesson(this.props.lesson.id)}} className="fa fa-times"/>
                     </a>

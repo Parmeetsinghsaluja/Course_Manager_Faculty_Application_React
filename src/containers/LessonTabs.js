@@ -1,6 +1,7 @@
 import React from 'react';
 import LessonServiceClient from '../services/LessonServiceClient';
-import LessonTabItem from '../components/LessonTabItem'
+import LessonTabItem from '../components/LessonTabItem';
+import Topic from './Topic';
 
 
 export default class LessonTabs
@@ -10,15 +11,18 @@ export default class LessonTabs
         this.state = {
             courseId: '',
             moduleId: '',
+            lessonId: '',
             lesson: { title: '' },
-            lessons: [ ]
+            lessons: [ ],
         };
         this.createLesson= this.createLesson.bind(this);
         this.titleChanged = this.titleChanged.bind(this);
         this.setModuleId = this.setModuleId.bind(this);
         this.setCourseId = this.setCourseId.bind(this);
         this.deleteLesson = this.deleteLesson.bind(this);
+        this.showTopics = this.showTopics.bind(this);
         this.lessonService = LessonServiceClient.instance;
+
     }
     setLessons(lessons) {
         this.setState({lessons: lessons})
@@ -64,6 +68,10 @@ export default class LessonTabs
         this.setState({lesson: {title: event.target.value}});
     }
 
+    showTopics(lessonId){
+        this.setState({lessonId:lessonId});
+    }
+
     renderListOfLessons() {
         let lessons = null;
         if(this.state) {
@@ -72,11 +80,16 @@ export default class LessonTabs
                     return <LessonTabItem  key={lesson.id}
                                            lesson={lesson}/>
                 }
-            )
+            );
             lessons = this.state.lessons.map((lesson) => {
-                return <LessonTabItem  lesson ={lesson}
+                return <div>
+                        <LessonTabItem lesson ={lesson}
                                        key={lesson.id}
-                                       deleteLesson={this.deleteLesson}/>
+                                       deleteLesson={this.deleteLesson}
+                                       showTopics = {this.showTopics} />
+                        <Topic courseId={this.state.courseId} moduleId={this.state.moduleId}
+                               lessonId ={this.state.lessonId} />
+                    </div>
             });
         }
 
@@ -86,7 +99,9 @@ export default class LessonTabs
     }
 
     render() {
-        return <ul className="nav nav-tabs">
+        return <div>
+            <div>
+                <ul className="nav nav-tabs">
             {this.renderListOfLessons()}
             <li className="nav-item" >
                 <a className="nav-link active">
@@ -96,6 +111,11 @@ export default class LessonTabs
                     <i onClick =  {this.createLesson} className="fa fa-plus"/>
                 </a>
             </li>
-        </ul>;
+        </ul>
+                </div>
+            <div>
+
+            </div>
+        </div>
     }
 }
