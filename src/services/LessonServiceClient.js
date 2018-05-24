@@ -1,8 +1,8 @@
 const MODULE_LESSON_API_URL =
-    'http://localhost:8080/api/course/CID/module/MID/lesson';
+    'http://saluja-summer1-2018.herokuapp.com/api/course/CID/module/MID/lesson';
 
 const LESSON_API_URL =
-    'http://localhost:8080/api/lesson';
+    'http://saluja-summer1-2018.herokuapp.com/api/lesson';
 
 let _singleton = Symbol();
 export default class LessonServiceClient {

@@ -18,7 +18,7 @@ class CourseRow extends React.Component {
                         {this.props.course.modified}
                  </td>
                 <td>
-                    <i className="fa fa-close"
+                    <i className="fa fa-trash"
                            onClick={() => {
                                this.props.deleteCourse(this.props.course.id)
                            }}/>
