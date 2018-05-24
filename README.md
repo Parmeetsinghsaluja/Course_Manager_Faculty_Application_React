@@ -1,4 +1,4 @@
-This is a Web Application which is based on Faculty Application
+This is a Web Application which is based on Faculty Application of Course Management System
 
 The following features will be implemented in this application:
 Courses - faculty can create a list of courses
