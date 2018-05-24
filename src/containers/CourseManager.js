@@ -15,8 +15,6 @@ export default class CourseManager
                     <Route path="/course/:courseId/:title"
                            component={CourseEditor}>
                     </Route>
-
-
                 </div>
             </Router>
         )

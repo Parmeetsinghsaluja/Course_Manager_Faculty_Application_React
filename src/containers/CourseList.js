@@ -24,19 +24,13 @@ class CourseList extends React.Component {
     renderCourseRows() {
         let courses = null;
         if(this.state) {
-            courses = this.state.courses.map(
-                function (course) {
+            courses = this.state.courses.map((course)=> {
                     return <CourseRow key={course.id}
-                                      course={course}/>
+                                      course={course}
+                                      deleteCourse={this.deleteCourse}/>
                 }
-            )
-            courses = this.state.courses.map((course) => {
-                return <CourseRow course={course}
-                                  key={course.id}
-                                  deleteCourse={this.deleteCourse}/>
-            });
+            );
         }
-
         return (
             courses
         )
@@ -44,7 +38,10 @@ class CourseList extends React.Component {
 
     titleChanged(event) {
         this.setState({
-            course: { title: event.target.value }
+            course: { title: event.target.value,
+                      created: Date.now(),
+                      modified: Date.now()
+            }
         });
     }
     createCourse() {
@@ -54,40 +51,48 @@ class CourseList extends React.Component {
     }
 
     deleteCourse(courseId) {
-        this.courseService
-            .deleteCourse(courseId)
-            .then(() => { this.findAllCourses(); });
+        let value= window.confirm(`Deleting the Course`);
+        if(value) {
+            this.courseService
+                .deleteCourse(courseId)
+                .then(() => {
+                    this.findAllCourses();
+                });
+        }
     }
 
     render() {
-        return (
-            <div>
-                <div>
-                <NavBar title ="Course Manager"/>
-                </div>
-                <br/>
-                <div>
-                        <form className="form-inline">
+        return (<div>
+                    <div>
+                        <NavBar/>
+                    </div>
+                    <br/>
+                    <div>
+                        <form className="form-inline col-12">
+                            <label>Add New Course: &nbsp;</label>
                             <input onChange={this.titleChanged}
-                                   className="form-control"
+                                   className="form-control col-10"
                                    id="titleFld"
                                    placeholder="New Course Title"/>
+                            &nbsp;
                             <i className="fa-2x fa fa-plus"
                                onClick ={this.createCourse}/>
                         </form>
                     </div>
-                <table className="table">
-                    <thead>
-                    <tr><th>Title</th>
-                        <th>Owned By</th>
-                        <th>Last modified by me</th>
-                        <th>&nbsp;</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {this.renderCourseRows()}
-                    </tbody>
-                </table>
+                    <br/>
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Owned By</th>
+                                <th>Last modified by me</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.renderCourseRows()}
+                        </tbody>
+                    </table>
             </div>
         )
     }

@@ -19,9 +19,16 @@ export default class NavBar
 
     render() {
         return <nav className="navbar navbar-lg navbar-dark bg-dark nav-fill">
-            <a id ="navbar-text" className="navbar-brand" href="/">
+            <a href="http://localhost:3000/courses">
+            <i className="fa-2x fa fa-book" style={{color:'green'}}>
+                &nbsp;
+                Course Manager
+            </i>
+                </a>
+            <a id ="navbar-text" className="navbar-brand" href="http://localhost:3000/course">
                 {this.props.title}
             </a>
+
             </nav>
 
     }

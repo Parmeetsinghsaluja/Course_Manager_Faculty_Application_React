@@ -1,7 +1,8 @@
 import React from 'react';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import LessonServiceClient from '../services/LessonServiceClient';
 import LessonTabItem from '../components/LessonTabItem';
-import Topic from './Topic';
+import LessonEditor from "./LessonEditor";
 
 
 export default class LessonTabs
@@ -14,6 +15,7 @@ export default class LessonTabs
             lessonId: '',
             lesson: { title: '' },
             lessons: [ ],
+            showTopic:false
         };
         this.createLesson= this.createLesson.bind(this);
         this.titleChanged = this.titleChanged.bind(this);
@@ -25,7 +27,7 @@ export default class LessonTabs
 
     }
     setLessons(lessons) {
-        this.setState({lessons: lessons})
+        this.setState({lessons: lessons});
     }
 
     findAllLessonsForModule(courseId,moduleId) {
@@ -45,11 +47,13 @@ export default class LessonTabs
     componentDidMount() {
         this.setModuleId(this.props.moduleId);
         this.setCourseId(this.props.courseId);
+        this.setState({showTopic: false});
     }
+
     componentWillReceiveProps(newProps){
-        this.setModuleId(newProps.moduleId);
-        this.setCourseId(newProps.courseId);
-        this.findAllLessonsForModule(newProps.courseId,newProps.moduleId)
+     this.setModuleId(newProps.moduleId);
+     this.setCourseId(newProps.courseId);
+     this.findAllLessonsForModule(newProps.courseId, newProps.moduleId);
     }
 
     createLesson() {
@@ -59,9 +63,14 @@ export default class LessonTabs
     }
 
     deleteLesson(lessonId) {
-        this.lessonService
-            .deleteLesson(lessonId)
-            .then(() => { this.findAllLessonsForModule(this.props.courseId,this.props.moduleId); });
+        let value= window.confirm(`Deleting the Lesson`);
+        if(value) {
+            this.lessonService
+                .deleteLesson(lessonId)
+                .then(() => {
+                    this.findAllLessonsForModule(this.props.courseId, this.props.moduleId);
+                });
+        }
     }
 
     titleChanged(event) {
@@ -70,52 +79,50 @@ export default class LessonTabs
 
     showTopics(lessonId){
         this.setState({lessonId:lessonId});
+        this.setState({showTopic : true});
     }
 
     renderListOfLessons() {
         let lessons = null;
         if(this.state) {
-            lessons= this.state.lessons.map(
-                function (lesson) {
+            lessons= this.state.lessons.map((lesson) => {
                     return <LessonTabItem  key={lesson.id}
-                                           lesson={lesson}/>
+                                           lesson={lesson}
+                                           courseId={this.props.courseId}
+                                           moduleId={this.props.moduleId}
+                                           lessonId ={this.state.lessonId}
+                                           showTopics={this.props.showTopics}
+                                           showTopic ={this.state.showTopic}
+                                           deleteLesson={this.deleteLesson}/>
                 }
             );
-            lessons = this.state.lessons.map((lesson) => {
-                return <div>
-                        <LessonTabItem lesson ={lesson}
-                                       key={lesson.id}
-                                       deleteLesson={this.deleteLesson}
-                                       showTopics = {this.showTopics} />
-                        <Topic courseId={this.state.courseId} moduleId={this.state.moduleId}
-                               lessonId ={this.state.lessonId} />
-                    </div>
-            });
         }
-
         return (
             lessons
         )
     }
 
     render() {
-        return <div>
-            <div>
-                <ul className="nav nav-tabs">
-            {this.renderListOfLessons()}
-            <li className="nav-item" >
-                <a className="nav-link active">
-                    <input type="text" placeholder="Title"
-                           onChange={this.titleChanged}
-                           value={this.state.lesson.title}/>
-                    <i onClick =  {this.createLesson} className="fa fa-plus"/>
-                </a>
-            </li>
-        </ul>
-                </div>
-            <div>
-
-            </div>
-        </div>
+        return (<div>
+                    <Router>
+                        <div>
+                            <div>
+                                <ul className="nav nav-pills nav-justified" style={{backgroundColor: "#f6d8f2" }}>
+                                    {this.renderListOfLessons()}
+                                    <li className="nav-item">
+                                            <input className ="form-control nav-link" type="text" placeholder="Lesson-Title"
+                                                    onChange={this.titleChanged}
+                                                    value={this.state.lesson.title}/>
+                                            <i onClick =  {this.createLesson} className="fa fa-plus"/>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <Route path="/course/:courseId/module/:moduleId/lesson/:lessonId"
+                                       component = {LessonEditor}/>
+                            </div>
+                        </div>
+                    </Router>
+        </div>)
     }
 }
