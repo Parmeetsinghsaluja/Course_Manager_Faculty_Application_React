@@ -22,7 +22,6 @@ export default class LessonTabs
         this.setModuleId = this.setModuleId.bind(this);
         this.setCourseId = this.setCourseId.bind(this);
         this.deleteLesson = this.deleteLesson.bind(this);
-        this.showTopics = this.showTopics.bind(this);
         this.lessonService = LessonServiceClient.instance;
 
     }
@@ -77,10 +76,6 @@ export default class LessonTabs
         this.setState({lesson: {title: event.target.value}});
     }
 
-    showTopics(lessonId){
-        this.setState({lessonId:lessonId});
-        this.setState({showTopic : true});
-    }
 
     renderListOfLessons() {
         let lessons = null;
@@ -91,8 +86,6 @@ export default class LessonTabs
                                            courseId={this.props.courseId}
                                            moduleId={this.props.moduleId}
                                            lessonId ={this.state.lessonId}
-                                           showTopics={this.props.showTopics}
-                                           showTopic ={this.state.showTopic}
                                            deleteLesson={this.deleteLesson}/>
                 }
             );

@@ -1,7 +1,8 @@
 import React from 'react';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import TopicServiceClient from "../services/TopicServiceClient";
 import TopicTabItem from '../components/TopicTabItem';
-
+import TopicEditor from  './TopicEditor';
 
 export default class LessonTabs
     extends React.Component {
@@ -12,9 +13,7 @@ export default class LessonTabs
             moduleId: '',
             lessonId:'',
             topic:{title:''},
-            topics: [
-
-            ]
+            topics: []
         };
         this.topicService = TopicServiceClient.instance;
         this.createTopic = this.createTopic.bind(this);
@@ -71,6 +70,9 @@ export default class LessonTabs
             topics = this.state.topics.map((topic)=> {
                     return <TopicTabItem  key = {topic.id}
                                           topic = {topic}
+                                          courseId={this.props.courseId}
+                                          moduleId={this.props.moduleId}
+                                          lessonId ={this.state.lessonId}
                                           deleteTopic = {this.deleteTopic}/>
                 }
             );
@@ -90,15 +92,25 @@ export default class LessonTabs
     }
 
     render() {return (<div>
-                        <ul className="nav nav-pills nav-justified" style={{backgroundColor: "#5b67f6" }}>
-                            {this.renderListOfTopic()}
-                            <li className="nav-item" >
-                                    <input type="text" className ="form-control nav-link" placeholder=" Topic Title"
-                                           onChange={this.titleChanged}
-                                           value={this.state.topic.title}/>
-                                    <i onClick =  {this.createTopic} className="fa fa-plus"/>
-                            </li>
-                        </ul>
+        <Router>
+            <div>
+                <div>
+                    <ul className="nav nav-pills nav-justified" style={{backgroundColor: "#f6f5ab" }}>
+                        {this.renderListOfTopic()}
+                        <li className="nav-item" >
+                            <input type="text" className ="form-control nav-link" placeholder=" Topic Title"
+                                               onChange={this.titleChanged}
+                                               value={this.state.topic.title}/>
+                            <i onClick =  {this.createTopic} className="fa fa-plus"/>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <Route path="/course/:courseId/module/:moduleId/lesson/:lessonId/topic/:topicId"
+                           component = {TopicEditor}/>
+                </div>
+            </div>
+        </Router>
     </div>);
     }
 }
