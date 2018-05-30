@@ -121,6 +121,15 @@ export const widgetReducer = (state = {widgets: [], preview: false, topicId: ''}
                     widget.id !== action.id
                 ))
             };
+        case constants.MOVE_UP:
+            let upIndex = state.indexOf(action.widget);
+            state.move(upIndex, upIndex - 1);
+            return state.splice(0);
+
+        case constants.MOVE_DOWN:
+            let downIndex = state.indexOf(action.widget);
+            state.move(downIndex, downIndex - 1);
+            return state.splice(0);
 
         case constants.ADD_WIDGET:
             return {

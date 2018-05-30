@@ -1,9 +1,8 @@
 import React from 'react';
 import App from './WidgetList';
-import {Provider} from 'react-redux'
-import {createStore} from 'redux'
-import {widgetReducer} from "../reducers/widgetReducer"
-import {WidgetContainer} from '../components/Widget'
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
+import {widgetReducer} from "../reducers/widgetReducer";
 
 let store = createStore(widgetReducer);
 

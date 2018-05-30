@@ -42,7 +42,7 @@ export const linkChanged = (dispatch, widgetId, newLink) => (
 
 export const listTypeChanged = (dispatch, widgetId, newType) => (
     dispatch({
-        type: constants.IMAGE_TEXT_CHANGED,
+        type: constants.LIST_TYPE_CHANGED,
         id: widgetId,
         listType: newType})
 );

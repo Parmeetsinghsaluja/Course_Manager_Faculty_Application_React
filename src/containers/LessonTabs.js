@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {Switch, Route} from 'react-router';
 import LessonServiceClient from '../services/LessonServiceClient';
 import LessonTabItem from '../components/LessonTabItem';
 import LessonEditor from "./LessonEditor";
@@ -97,13 +97,13 @@ export default class LessonTabs
 
     render() {
         return (<div>
-                    <Router>
+                    <Switch>
                         <div>
                             <div>
                                 <ul className="nav nav-pills nav-justified" style={{backgroundColor: "#f6d8f2" }}>
                                     {this.renderListOfLessons()}
                                     <li className="nav-item">
-                                            <input className ="form-control nav-link" type="text" placeholder="Lesson-Title"
+                                            <input className ="form-control nav-link" type="text" placeholder="Lesson Title"
                                                     onChange={this.titleChanged}
                                                     value={this.state.lesson.title}/>
                                             <i onClick =  {this.createLesson} className="fa fa-plus"/>
@@ -115,7 +115,7 @@ export default class LessonTabs
                                        component = {LessonEditor}/>
                             </div>
                         </div>
-                    </Router>
+                    </Switch>
         </div>)
     }
 }

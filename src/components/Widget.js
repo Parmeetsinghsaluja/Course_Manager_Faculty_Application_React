@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import {DELETE_WIDGET} from "../constants/index"
+import {DELETE_WIDGET,MOVE_UP,MOVE_DOWN} from "../constants/index"
 import * as actions from '../actions'
 
 const Heading = ({widget, preview, headingTextChanged, headingSizeChanged}) => {
@@ -75,8 +75,10 @@ const List = ({widget, preview, listTextChanged, listTypeChanged }) => {
                 </select>
                 <b>Preview</b>
             </div>
-            {widget.listType === "1" && <ul>{widget.text.split("\n")}</ul>}
-            {widget.listType === "2" && <ol>{widget.text.split("\n")}</ol>}
+            {parseInt(widget.listType) === 1 &&
+            <ul>{widget.text.split("\n").map(function(listValue){ return <li>{listValue}</li>; })}</ul>}
+            {parseInt(widget.listType) === 2 &&
+              <ol>{widget.text.split("\n").map(function(listValue){ return <li>{listValue}</li>; })}</ol>}
         </div>
     )};
 
@@ -137,9 +139,13 @@ const Widget = ({widget, preview, dispatch}) => {
                             <div>
                                 <b>{widget.widgetType} widget</b>
                                 <div className="form-check-inline pull-right">
-                                <i className="btn btn-warning fa fa-arrow-up" />
+                                <i className="btn btn-warning fa fa-arrow-up" onClick={e => {
+                                    dispatch({type: MOVE_UP, widget: widget})
+                                }}/>
                                     &nbsp;
-                                <i className="btn btn-warning fa fa-arrow-down" />
+                                <i className="btn btn-warning fa fa-arrow-down" onClick={e => {
+                                    dispatch({type: MOVE_DOWN, widget: widget})
+                                }}/>
                                     &nbsp;
                                 <select className="form-control" value={widget.widgetType}
                                         onChange={e =>
