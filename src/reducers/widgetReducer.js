@@ -135,11 +135,13 @@ export const widgetReducer = (state = {widgets: [], preview: false, topicId: ''}
             };
 
         case constants.MOVE_UP:
+            alert("Order Changed");
             let upIndex = state.widgets.indexOf(action.widget);
             state.widgets.move(upIndex, upIndex - 1);
             return {widgets: state.widgets.splice(0)};
 
         case constants.MOVE_DOWN:
+            alert("Order Changed");
             let downIndex = state.widgets.indexOf(action.widget);
             state.widgets.move(downIndex, downIndex + 1);
             return {widgets : state.widgets.splice(0)};
