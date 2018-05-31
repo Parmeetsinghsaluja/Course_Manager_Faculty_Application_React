@@ -114,7 +114,7 @@ export const widgetReducer = (state = {widgets: [], preview: false, topicId: ''}
 
         case constants.SAVE:
          state.widgets.map(function(widget){ widget.widgetOrder = state.widgets.indexOf(widget)});
-            fetch('http:///api/widget/save' + action.topicId , {
+            fetch('http://saluja-summer1-2018.herokuapp.com/api/widget/save' + action.topicId , {
                 method: 'post',
                 body: JSON.stringify(state.widgets),
                 headers: {

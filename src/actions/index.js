@@ -60,7 +60,7 @@ export const headingSizeChanged = (dispatch, widgetId, newSize) => (
 );
 
 export const findAllWidgets = dispatch => {
-    fetch('http://localhost:8080/api/widget')
+    fetch('http://saluja-summer1-2018.herokuapp.com/api/widget')
         .then(response => (response.json()))
         .then(widgets => dispatch({
             type: constants.FIND_ALL_WIDGETS,
@@ -68,7 +68,7 @@ export const findAllWidgets = dispatch => {
 };
 
 export const findAllWidgetsForTopic = (dispatch, topicId) => {
-    fetch('http://localhost:8080/api/widget'+ topicId)
+    fetch('http://saluja-summer1-2018.herokuapp.com/api/widget'+ topicId)
         .then(response => (response.json()))
         .then(widgets => dispatch({
             type: constants.FIND_ALL_WIDGETS,
