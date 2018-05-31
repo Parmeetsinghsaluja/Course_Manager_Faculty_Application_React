@@ -15,10 +15,13 @@ http://saluja-react-course-manager.herokuapp.com/courses
 Database - MySQL Backend - React Frontend 
 
 New features Added-
-Widgets
-Heading widget
-Paragraph widget
-List widget
-Link widget
-Image widget
+
+1.Heading widget
+2.Paragraph widget
+3.List widget
+4.Link widget
+5.Image widget
+
+Reordering of Widgets is also done.
+The middle tier files are in https://github.com/Parmeetsinghsaluja/SpringBoot repository
 
