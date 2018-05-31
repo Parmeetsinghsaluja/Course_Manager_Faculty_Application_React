@@ -9,10 +9,6 @@ let store = createStore(widgetReducer);
 export default class TopicEditor
     extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return <div>
             <Provider store={store}>

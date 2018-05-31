@@ -1,4 +1,4 @@
-import * as constants from "../constants/index"
+import * as constants from "../constants/index";
 
 export const headingTextChanged = (dispatch, widgetId, newText) => (
     dispatch({
@@ -39,7 +39,12 @@ export const linkChanged = (dispatch, widgetId, newLink) => (
         id: widgetId,
         link: newLink})
 );
-
+export const nameChanged = (dispatch, widgetId, newName) => (
+    dispatch({
+        type: constants.NAME_CHANGED,
+        id: widgetId,
+        name: newName})
+);
 export const listTypeChanged = (dispatch, widgetId, newType) => (
     dispatch({
         type: constants.LIST_TYPE_CHANGED,
@@ -67,7 +72,7 @@ export const findAllWidgetsForTopic = (dispatch, topicId) => {
         .then(response => (response.json()))
         .then(widgets => dispatch({
             type: constants.FIND_ALL_WIDGETS,
-            widgets: widgets }))
+            widgets: widgets.sort(function (a,b) {return a.widgetOrder > b.widgetOrder})}))
 };
 export const addWidget = dispatch => (
     dispatch({type: constants.ADD_WIDGET})
@@ -78,3 +83,5 @@ export const save = (dispatch,topicId) => (
 export const preview = dispatch => (
     dispatch({type: constants.PREVIEW})
 );
+
+

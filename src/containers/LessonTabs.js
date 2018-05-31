@@ -1,5 +1,5 @@
 import React from 'react';
-import {Switch, Route} from 'react-router';
+import {Switch, Route} from 'react-router-dom';
 import LessonServiceClient from '../services/LessonServiceClient';
 import LessonTabItem from '../components/LessonTabItem';
 import LessonEditor from "./LessonEditor";

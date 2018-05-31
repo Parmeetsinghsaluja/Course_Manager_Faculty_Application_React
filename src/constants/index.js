@@ -13,4 +13,6 @@ export const LIST_TEXT_CHANGED = 'LIST_TEXT_CHANGED';
 export const LIST_TYPE_CHANGED = 'LIST_TYPE_CHANGED';
 export const LINK_TEXT_CHANGED = 'LINK_TEXT_CHANGED';
 export const LINK_CHANGED = 'LINK_CHANGED';
+export const NAME_CHANGED = 'NAME_CHANGED';
 export const PREVIEW = 'PREVIEW';
+export const DISABLED = 'DISABLED';

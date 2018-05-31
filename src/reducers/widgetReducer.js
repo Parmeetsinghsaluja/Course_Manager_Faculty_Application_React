@@ -1,4 +1,5 @@
-import * as constants from "../constants/index"
+import * as constants from "../constants/index";
+import "array.prototype.move";
 
 export const widgetReducer = (state = {widgets: [], preview: false, topicId: ''}, action) => {
     let newState;
@@ -70,6 +71,16 @@ export const widgetReducer = (state = {widgets: [], preview: false, topicId: ''}
                 })
             };
 
+        case constants.NAME_CHANGED:
+            return {
+                widgets: state.widgets.map(widget => {
+                    if(widget.id === action.id) {
+                        widget.name = action.name
+                    }
+                    return Object.assign({}, widget)
+                })
+            };
+
         case constants.HEADING_SIZE_CHANGED:
             return {
                 widgets: state.widgets.map(widget => {
@@ -102,7 +113,8 @@ export const widgetReducer = (state = {widgets: [], preview: false, topicId: ''}
             return JSON.parse(JSON.stringify(newState));
 
         case constants.SAVE:
-            fetch('http://localhost:8080/api/widget/save' + action.topicId , {
+         state.widgets.map(function(widget){ widget.widgetOrder = state.widgets.indexOf(widget)});
+            fetch('http:///api/widget/save' + action.topicId , {
                 method: 'post',
                 body: JSON.stringify(state.widgets),
                 headers: {
@@ -121,15 +133,16 @@ export const widgetReducer = (state = {widgets: [], preview: false, topicId: ''}
                     widget.id !== action.id
                 ))
             };
+
         case constants.MOVE_UP:
-            let upIndex = state.indexOf(action.widget);
-            state.move(upIndex, upIndex - 1);
-            return state.splice(0);
+            let upIndex = state.widgets.indexOf(action.widget);
+            state.widgets.move(upIndex, upIndex - 1);
+            return {widgets: state.widgets.splice(0)};
 
         case constants.MOVE_DOWN:
-            let downIndex = state.indexOf(action.widget);
-            state.move(downIndex, downIndex - 1);
-            return state.splice(0);
+            let downIndex = state.widgets.indexOf(action.widget);
+            state.widgets.move(downIndex, downIndex + 1);
+            return {widgets : state.widgets.splice(0)};
 
         case constants.ADD_WIDGET:
             return {
@@ -141,11 +154,19 @@ export const widgetReducer = (state = {widgets: [], preview: false, topicId: ''}
                         widgetType: 'Paragraph',
                         headingValue: '',
                         listType: '',
-                        link:''
+                        link:'',
+                        name:'Widget Name',
+                        widgetOrder:state.widgets.length
                     }
                 ]
             };
+
         default:
             return state
     }
+};
+
+Array.prototype.move
+    = function (from, to) {
+    this.splice(to, 0, this.splice(from, 1)[0]);
 };

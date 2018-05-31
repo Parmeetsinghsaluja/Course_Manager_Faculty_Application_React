@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 import TopicServiceClient from "../services/TopicServiceClient";
 import TopicTabItem from '../components/TopicTabItem';
 import TopicEditor from  './TopicEditor';
@@ -92,7 +92,7 @@ export default class LessonTabs
     }
 
     render() {return (<div>
-        <Router>
+        <Switch>
             <div>
                 <div>
                     <ul className="nav nav-pills nav-justified" style={{backgroundColor: "#f6f5ab" }}>
@@ -110,7 +110,7 @@ export default class LessonTabs
                            component = {TopicEditor}/>
                 </div>
             </div>
-        </Router>
+        </Switch>
     </div>);
     }
 }

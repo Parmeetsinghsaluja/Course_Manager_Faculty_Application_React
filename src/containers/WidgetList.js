@@ -24,7 +24,9 @@ class WidgetList extends Component {
                     {this.props.widgets.map(widget => (
                         <WidgetContainer widget={widget}
                                          preview={this.props.previewMode}
-                                         key={widget.id}/>
+                                         key={widget.id}
+                                         index = {this.props.widgets.indexOf(widget)}
+                                         length = {this.props.widgets.length - 1}/>
                     ))}
                 </ul>
                 <div align="right">
@@ -36,12 +38,15 @@ class WidgetList extends Component {
     }
 }
 
-const stateToPropertiesMapper = (state) => ({widgets: state.widgets, previewMode: state.preview});
+const stateToPropertiesMapper = (state) => ({widgets: state.widgets,
+                                            previewMode: state.preview });
+
 const dispatcherToPropsMapper = (dispatch) => ({
     findAllWidgetsForTopic: (topicId) => actions.findAllWidgetsForTopic(dispatch,topicId),
     addWidget: () => actions.addWidget(dispatch),
     save: (topicId) => actions.save(dispatch,topicId),
     preview: () => actions.preview(dispatch)
 });
+
 const App = connect(stateToPropertiesMapper, dispatcherToPropsMapper)(WidgetList);
 export default App

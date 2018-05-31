@@ -3,63 +3,77 @@ import {connect} from 'react-redux'
 import {DELETE_WIDGET,MOVE_UP,MOVE_DOWN} from "../constants/index"
 import * as actions from '../actions'
 
-const Heading = ({widget, preview, headingTextChanged, headingSizeChanged}) => {
+const Heading = ({widget, preview, headingTextChanged, headingSizeChanged, nameChanged}) => {
     let selectElem;
     let inputElem;
-    return(
-        <div >
-            <div hidden={preview}>
-                <input className="form-control" onChange={() => headingTextChanged(widget.id, inputElem.value)}
-                       value={widget.text}
-                       ref={node => inputElem = node}/>
-                <br/>
-                <select className="form-control" onChange={() => headingSizeChanged(widget.id, selectElem.value)}
-                        value={widget.headingValue}
-                        ref={node => selectElem = node}>
-                    <option value= '1'>Heading 1</option>
-                    <option value= '2'>Heading 2</option>
-                    <option value= '3'>Heading 3</option>
-                </select>
-                <b>Preview</b>
-            </div>
-            {parseInt(widget.headingValue) ===  1 && <h1>{widget.text}</h1>}
-            {parseInt(widget.headingValue) ===  2 && <h2>{widget.text}</h2>}
-            {parseInt(widget.headingValue) ===  3 && <h3>{widget.text}</h3>}
+    let nameElem;
+    return <div>
+        <div hidden={preview}>
+            <input className="form-control" onChange={() => headingTextChanged(widget.id, inputElem.value)}
+                   value={widget.text}
+                   ref={node => inputElem = node}/>
+            <br/>
+            <select className="form-control" onChange={() => headingSizeChanged(widget.id, selectElem.value)}
+                    value={widget.headingValue}
+                    ref={node => selectElem = node}>
+                <option value='1'>Heading 1</option>
+                <option value='2'>Heading 2</option>
+                <option value='3'>Heading 3</option>
+            </select>
+            <br/>
+            <input className="form-control" value={widget.name}
+                   onChange={() => nameChanged(widget.id, nameElem.value)}
+                   ref={node => nameElem = node}/>
+            <b>Preview</b>
         </div>
-    )
+        {parseInt(widget.headingValue) === 1 && <h1>{widget.text}</h1>}
+        {parseInt(widget.headingValue) === 2 && <h2>{widget.text}</h2>}
+        {parseInt(widget.headingValue) === 3 && <h3>{widget.text}</h3>}
+    </div>
 };
 
-const Paragraph = ({widget, preview, paragraphTextChanged}) => {
+const Paragraph = ({widget, preview, paragraphTextChanged, nameChanged}) => {
     let inputElem;
+    let nameElem;
     return(
     <div>
         <div hidden={preview}>
             <textarea className = "form-control" value={widget.text}
                       onChange={() => paragraphTextChanged(widget.id, inputElem.value)}
                           ref={node => inputElem = node}/>
+            <br/>
+            <input className = "form-control" value={widget.name}
+                   onChange={() => nameChanged(widget.id, nameElem.value)}
+                   ref={node => nameElem = node}/>
             <b>Preview</b>
         </div>
         {widget.text}
     </div>
 )};
 
-const Image = ({widget, preview, imageTextChanged}) => {
+const Image = ({widget, preview, imageTextChanged, nameChanged}) => {
     let inputElem;
+    let nameElem;
     return(
         <div>
             <div hidden={preview}>
                 <input className = "form-control" value={widget.text}
                           onChange={() => imageTextChanged(widget.id, inputElem.value)}
                           ref={node => inputElem = node}/>
+                <br/>
+                <input className = "form-control" value={widget.name}
+                       onChange={() => nameChanged(widget.id, nameElem.value)}
+                       ref={node => nameElem = node}/>
                 <b>Preview</b>
             </div>
             <img src={widget.text} height="100px" width="100px" />
         </div>
 )};
 
-const List = ({widget, preview, listTextChanged, listTypeChanged }) => {
+const List = ({widget, preview, listTextChanged, listTypeChanged, nameChanged }) => {
     let inputElem;
     let selectElem;
+    let nameElem;
     return(
         <div>
             <div hidden={preview}>
@@ -73,6 +87,10 @@ const List = ({widget, preview, listTextChanged, listTypeChanged }) => {
                     <option value="1">Unordered List</option>
                     <option value="2">Ordered List</option>
                 </select>
+                <br/>
+                <input className = "form-control" value={widget.name}
+                       onChange={() => nameChanged(widget.id, nameElem.value)}
+                       ref={node => nameElem = node}/>
                 <b>Preview</b>
             </div>
             {parseInt(widget.listType) === 1 &&
@@ -82,8 +100,9 @@ const List = ({widget, preview, listTextChanged, listTypeChanged }) => {
         </div>
     )};
 
-const Link = ({widget, preview, linkTextChanged, linkChanged }) => {
+const Link = ({widget, preview, linkTextChanged, linkChanged, nameChanged }) => {
     let inputElem;
+    let nameElem;
     let inputLinkElem;
     return(
         <div>
@@ -96,6 +115,12 @@ const Link = ({widget, preview, linkTextChanged, linkChanged }) => {
                 <input className = "form-control" value={widget.link}
                        onChange={() => linkChanged(widget.id, inputLinkElem.value)}
                        ref={node => inputLinkElem = node}/>
+                <br/>
+
+                <input className = "form-control" value={widget.name}
+                       onChange={() => nameChanged(widget.id, nameElem.value)}
+                       ref={node => nameElem = node}/>
+
                 <b>Preview</b>
             </div>
             <a href ={widget.link}>{widget.text}</a>
@@ -118,18 +143,22 @@ const dispatchToPropsMapper = dispatch => ({
     linkTextChanged: (widgetId, newText) =>
         actions.linkTextChanged(dispatch, widgetId, newText),
     linkChanged: (widgetId, newLink) =>
-        actions.linkChanged(dispatch, widgetId, newLink)
+        actions.linkChanged(dispatch, widgetId, newLink),
+    nameChanged: (widgetId, newName) =>
+        actions.nameChanged(dispatch, widgetId, newName),
 });
+
 const stateToPropsMapper = state => ({
     preview: state.preview
 });
+
 const HeadingContainer = connect(stateToPropsMapper, dispatchToPropsMapper)(Heading);
 const ParagraphContainer = connect(stateToPropsMapper, dispatchToPropsMapper)(Paragraph);
 const ImageContainer = connect(stateToPropsMapper, dispatchToPropsMapper)(Image);
 const ListContainer = connect(stateToPropsMapper, dispatchToPropsMapper)(List);
 const LinkContainer = connect(stateToPropsMapper, dispatchToPropsMapper)(Link);
 
-const Widget = ({widget, preview, dispatch}) => {
+const Widget = ({widget, preview, dispatch, index, length }) => {
     let selectElement;
     return(
         <div className ="panel panel-default">
@@ -139,11 +168,13 @@ const Widget = ({widget, preview, dispatch}) => {
                             <div>
                                 <b>{widget.widgetType} widget</b>
                                 <div className="form-check-inline pull-right">
-                                <i className="btn btn-warning fa fa-arrow-up" onClick={e => {
+                                <i className="btn btn-warning fa fa-arrow-up " aria-disabled={index === 0}
+                                   onClick={e => {
                                     dispatch({type: MOVE_UP, widget: widget})
                                 }}/>
                                     &nbsp;
-                                <i className="btn btn-warning fa fa-arrow-down" onClick={e => {
+                                <i className="btn btn-warning fa fa-arrow-down" aria-disabled={index === length}
+                                   onClick={e => {
                                     dispatch({type: MOVE_DOWN, widget: widget})
                                 }}/>
                                     &nbsp;
@@ -178,6 +209,7 @@ const Widget = ({widget, preview, dispatch}) => {
          </div>
     )
 };
+
 const WidgetContainer = connect(state => ({
     preview: state.preview
 }))(Widget);
