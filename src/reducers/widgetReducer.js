@@ -156,7 +156,7 @@ export const widgetReducer = (state = {widgets: [], preview: false, topicId: ''}
                         widgetType: 'Paragraph',
                         headingValue: '',
                         listType: '',
-                        link:'',
+                        link:'Link',
                         name:'Widget Name',
                         widgetOrder:state.widgets.length
                     }

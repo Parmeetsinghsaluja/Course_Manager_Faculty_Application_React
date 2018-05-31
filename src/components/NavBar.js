@@ -19,7 +19,7 @@ export default class NavBar
 
     render() {
         return <nav className="navbar navbar-lg navbar-dark bg-dark nav-fill">
-            <a href="http://localhost:3000/courses">
+            <a href="http://http://saluja-react-course-manager.herokuapp.com/courses">
             <i className="fa-2x fa fa-book" style={{color:'green'}}>
                 &nbsp;
                 Course Manager
