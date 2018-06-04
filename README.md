@@ -1,27 +1,31 @@
-This is a Web Application which is based on Faculty Application of Course Management System
-Managed react component state using redux
-Maped redux state to component properties
-Maped component event handlers to redux dispatches
+Faculty Application of Course Management System
+
+Following Tasks are done:
+- Managed react component state using redux
+- Maped redux state to component properties
+- Maped component event handlers to redux dispatches
 
 The following features are implemented in this application:
-Courses - faculty can create a list of courses
-Modules - faculty can create a list of modules for each course
-Lessons - faculty can create a list of lessons for each module
-Topics - faculty can create a list of topics for each lesson 
+- Courses: Faculty can create a list of courses
+- Modules: Faculty can create a list of modules for each course
+- Lessons: Faculty can create a list of lessons for each module
+- Topics:  Faculty can create a list of topics for each lesson 
+- Widgets: Faculty can create widgets for each topic
 
-The application is deployed on heroku
-http://saluja-react-course-manager.herokuapp.com/courses
 
-Database - MySQL Backend - React Frontend 
-
-New features Added-
-
+Types of Widgets:
 1.Heading widget
 2.Paragraph widget
 3.List widget
 4.Link widget
 5.Image widget
 
-Reordering of Widgets is also done.
-The middle tier files are in https://github.com/Parmeetsinghsaluja/SpringBoot repository
+The application is deployed on heroku: http://saluja-react-course-manager.herokuapp.com/courses
+
+The following technology is used to develop this application:
+ - Database: MySQL 
+ - Backend/Middle Tier: Spring Boot 
+ - Frontend: React and Redux Framework
+
+The middle tier repository is https://github.com/Parmeetsinghsaluja/SpringBoot repository
 
