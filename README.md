@@ -13,12 +13,12 @@ The following features are implemented in this application:
 - Widgets: Faculty can create widgets for each topic
 
 
-Types of Widgets:
-1.Heading widget
-2.Paragraph widget
-3.List widget
-4.Link widget
-5.Image widget
+Types of Widgets:<br/>
+1.Heading widget<br/>
+2.Paragraph widget<br/>
+3.List widget<br/>
+4.Link widget<br/>
+5.Image widget<br/>
 
 The application is deployed on heroku: http://saluja-react-course-manager.herokuapp.com/courses
 
